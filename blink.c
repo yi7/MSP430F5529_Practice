@@ -1,8 +1,13 @@
 #include <msp430.h>
 
-/**
- * blink.c
- */
+#pragma vector=TIMER0_A1_VECTOR
+__interrupt void Port_1ISR(void)
+{
+    TA0CTL &= ~TAIFG;
+    P1OUT ^= 0x01;
+}
+
+
 void main(void)
 {
     /*
@@ -16,12 +21,6 @@ void main(void)
     P4OUT  = 0x80; // Set P4.7 high
     P4DIR  = 0x80; // Set P4.7 as output
 
-    //P1REN |= 0x01;
-    //P1OUT |= 0x01;
-    //P1DIR |= 0x01;
-    //P4OUT |= 0x01;
-    //P4DIR |= 0x01;
-
     while( 1 )
     {
         if( !(P1IN & 0x02) ) // If push button is pressed
@@ -34,23 +33,37 @@ void main(void)
     }
     */
 
-    /*
-    WDTCTL = WDTPW | WDTHOLD; // Stop watchdog timer
-    P1DIR |= 0x01; //Set P1.0 to output direction
 
-    for(;;)
+    WDTCTL = WDTPW | WDTHOLD; // Stop watchdog timer
+
+    P1DIR |= 0x01; //Set P1.0 to output direction
+    __bis_SR_register(GIE); //Enable Interrupts
+    //__enable_interrupt();
+
+    TA0CTL |= TASSEL_1;
+    TA0CTL |= ID_0;
+    TA0EX0 |= TAIDEX_0;
+    TA0CTL |= TAIE;
+    TA0CTL |= MC_2;
+
+    while(1)
     {
-        volatile unsigned int i; //Volatile to prevent optimization
-        P1OUT ^= 0x01;
-        //for( i=0; i<30000; i++ );
-        __delay_cycles(40000);
+
     }
 
+    /*for(;;)
+    {
+        volatile unsigned int i; //Volatile to prevent optimization
+        TA0CTL &= ~TAIFG;
+        P1OUT ^= 0x01;
+        for( i=0; i<30000; i++ );
+    }*/
 
-    return 0;
-    */
+
+    //return 0;
 
 
+    /*
     WDTCTL = WDTPW | WDTHOLD;
     P1DIR = 0x01;
     P1REN = 0x02;
@@ -67,6 +80,6 @@ void main(void)
             P1OUT = 0x02;
         }
     }
-
+    */
 
 }
