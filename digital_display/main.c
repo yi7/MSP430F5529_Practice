@@ -9,10 +9,12 @@ int main(void)
 
 	while(1)
 	{
-	    tm1637_testWrite(0, 7, 3, 4);
-	    //tm1637_display(1, 1);
-	    //tm1637_display(2, 2);
-	    //tm1637_display(3, 3);
+	    //tm1637_writeAll(0, 7, 3, 4);
+
+	    tm1637_writeOne(0, 1);
+	    tm1637_writeOne(1, 3);
+	    tm1637_writeOne(2, 5);
+	    tm1637_writeOne(3, 7);
 	}
 
 
