@@ -25,8 +25,8 @@ void tm1637_start()
 {
     P2OUT |= CLK;
     P1OUT |= DIO;
-    P2OUT &= ~DIO;
-    P1OUT &= ~CLK;
+    P1OUT &= ~DIO;
+    P2OUT &= ~CLK;
 }
 
 void tm1637_stop()
@@ -82,9 +82,9 @@ void tm1637_testWrite(uint8_t first, uint8_t second, uint8_t third, uint8_t four
 
     tm1637_start();
     tm1637_testValue(0xc0);
-    tm1637_testValue(first);
-    tm1637_testValue(second);
-    tm1637_testValue(third);
+    tm1637_testValue(hex_table[first]);
+    tm1637_testValue(hex_table[second]);
+    tm1637_testValue(hex_table[third]);
     tm1637_testValue(hex_table[fourth]);
     tm1637_stop();
 }

@@ -9,7 +9,7 @@ int main(void)
 
 	while(1)
 	{
-	    tm1637_testWrite(2, 3, 5, 9);
+	    tm1637_testWrite(0, 7, 3, 4);
 	    //tm1637_display(1, 1);
 	    //tm1637_display(2, 2);
 	    //tm1637_display(3, 3);
